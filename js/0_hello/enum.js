@@ -7,6 +7,7 @@ var FRUITS_TYPE = {
     WATERMELON : 4,
 };
 FRUITS_TYPE.SIZEOF = 5;
+Object.freeze(FRUITS_TYPE);
 
 function init(l){
     for(var i=0;i<FRUITS_TYPE.SIZEOF;++i){
