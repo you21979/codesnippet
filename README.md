@@ -1,2 +1,6 @@
 codesnippet
 ===========
+
+License
+=======
+Public Domain
