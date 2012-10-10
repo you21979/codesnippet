@@ -41,7 +41,7 @@ var list = [
     JSTYPE(null),
     JSTYPE(undefined),
     JSTYPE({}),
-    JSTYPE([]),
+    JSTYPE([])
 ];
 list.forEach(function(l){
     l();
