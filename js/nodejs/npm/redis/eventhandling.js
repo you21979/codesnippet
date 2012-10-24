@@ -13,7 +13,7 @@ rcl.on('idle', function () {
 // event
 // -----------------
 // 接続した
-rcl.on('connect', function (err) {
+rcl.on('connect', function () {
     console.log('connect');
 });
 // 切断時
@@ -22,11 +22,11 @@ rcl.on('end', function (err) {
     console.log('end');
 });
 // 準備完了
-rcl.on('ready', function (err) {
+rcl.on('ready', function () {
     console.log('ready');
 });
 // 再接続中
-rcl.on('reconnecting', function (err) {
+rcl.on('reconnecting', function () {
     console.log('reconnecting');
 });
 // エラーが発生（接続失敗など）
