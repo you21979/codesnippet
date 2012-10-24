@@ -17,7 +17,7 @@ rcl.on('connect', function () {
     console.log('connect');
 });
 // 切断時
-rcl.on('end', function (err) {
+rcl.on('end', function () {
     // connect呼ばれなくてもくる
     console.log('end');
 });
