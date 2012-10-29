@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<venture>
+  <option name="Penguin" value="Tux"/>
+  <company>
+    <name>hoge</name>
+    <url>http://localhost/</url>
+  </company>
+
+  <company>
+    <name>huga</name>
+    <url>http://example.com</url>
+  </company>
+</venture>
