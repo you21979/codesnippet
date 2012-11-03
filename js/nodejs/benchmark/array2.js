@@ -16,6 +16,23 @@ function(MAX){
     }
     console.timeEnd(TID);
 },
+function(MAX){
+    var q = [];
+    var TID = "circ queue push:"+MAX;
+    console.time(TID);
+    for(var i = 0; i<MAX; ++i){
+        q.push(i);
+    }
+    console.timeEnd(TID);
+    var TID = "circ queue pop:"+MAX;
+    console.time(TID);
+    for(var i = 0; i<MAX; ++i){
+        var n = q.shift(i);
+        assert(n === i);
+        q.push(n);
+    }
+    console.timeEnd(TID);
+},
 function(){
 }
 ].forEach(function(fnc){
