@@ -1,4 +1,4 @@
-// using asyncblock
+// using very simple async
 var redis = require('redis');
 var Query = require('./query');
 
@@ -14,7 +14,7 @@ for(var i=0;i<100000;++i){
 }
 console.log('GO');
 console.time('QUERY');
-q.exec1(function(){
+q.exec2(function(){
     console.timeEnd('QUERY');
     rcl.quit(function (err, res) {
         console.log('Exiting from quit command.');
