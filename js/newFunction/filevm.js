@@ -1,4 +1,5 @@
 // VM版は遅すぎる・・・
+"use strict";
 var fs = require('fs');
 var txt = fs.readFileSync('./filevm.jss');
 var MAX = 1000000;
@@ -11,7 +12,7 @@ var MAX = 1000000;
             console.log("test");
         },
     };
-    var f = new Function(txt);
+    var f = new Function('"use strict";' + txt);
     var x = f();
     console.time(TID);
     try{
