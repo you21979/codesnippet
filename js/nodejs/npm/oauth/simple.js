@@ -19,14 +19,14 @@ var oa = new OAuth(
 );
 oa.getOAuthRequestToken(function(error, oauth_token, oauth_token_secret, results){
     if (error) {
-      console.log(error);
-//      res.send("yeah no. didn't work.");
+        console.log(error);
     } else {
-      var oauth = {};
-      oauth.token = oauth_token;
-      console.log('oauth.token: ' + oauth.token);
-      oauth.token_secret = oauth_token_secret;
-      console.log('oauth.token_secret: ' + oauth.token_secret);
-//      res.redirect('https://twitter.com/oauth/authenticate?oauth_token='+oauth_token);
+        var oauth = {
+            token : oauth_token,
+            token_secret : oauth_token_secret,
+        };
+        console.log('oauth.token: ' + oauth.token);
+        console.log('oauth.token_secret: ' + oauth.token_secret);
+        var url = 'https://twitter.com/oauth/authenticate?oauth_token='+oauth_token;
     }
 });
