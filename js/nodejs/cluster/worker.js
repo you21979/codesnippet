@@ -1,6 +1,12 @@
 var cluster = require('cluster');
 if (cluster.isMaster) {
     var wlist = [];
+    cluster.setupMaster({
+        exec : "worker.js",
+        args : [],
+//        silent : true
+        silent : false
+    });
     cluster.on('fork',function(worker){
         worker.on('message', function(msg){
             var ret = JSON.parse(msg);
