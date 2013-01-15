@@ -3,11 +3,13 @@ if (cluster.isMaster) {
     var wlist = [];
     cluster.on('fork',function(worker){
         worker.on('message', function(msg){
-            switch(msg){
-            case 'end':
-                console.log(worker.id);
+            var ret = JSON.parse(msg);
+            switch(ret.status){
+            case 0:
                 break;
             }
+            console.log(ret);
+            console.log(worker.id);
         });
         worker.on('online', function() {
         });
@@ -28,12 +30,19 @@ if (cluster.isMaster) {
         }
     }
     process.nextTick(function N(){
-        workerCall(JSON.stringify({hoge:Math.random()}));
+        workerCall(JSON.stringify({id:Math.random()*2|0, hoge:Math.random()}));
         process.nextTick(N);
     });
     
 } else if (cluster.isWorker) {
     process.on('message', function(msg) {
-        process.send('end');
+        var obj = JSON.parse(msg);
+        var ret = {status : -1};
+        switch(obj.id){
+        case 1:
+            ret.status = 0;
+            break;
+        }
+        process.send(JSON.stringify(ret));
     });
 }
