@@ -2,11 +2,14 @@
 #config
 ######################################################
 TSC = tsc
+NODE = node
 COMPILE = $(TSC)
+EXEC = $(NODE)
 
 #make target
+BOOTSTRAP = hello.js
 SRCDIR = .
-JS = \
+OUTFILES = \
 	hello.js
 
 
@@ -14,10 +17,17 @@ JS = \
 #make
 ######################################################
 
-hello.js: $(SRCDIR)/hello.ts
-	$(COMPILE) $(SRCDIR)/hello.ts
+.SUFFIXES: .ts .js
+
+exec: $(SRCDIR)/$(BOOTSTRAP)
+	@$(EXEC) $<
+
+all:$(OUTFILES)
+
+.ts.js:
+	$(COMPILE) $(SRCDIR)/$<
 
 clean:
-	-rm $(JS)
+	-rm $(OUTFILES)
 
 
