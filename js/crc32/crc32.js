@@ -16,19 +16,23 @@ var crc32 = module.exports = (function(){
         return table;
     })(MAX);
     return function(buffer){
+        if(!(buffer instanceof Buffer)){
+            throw new Error('no Buffer');
+        }
         var len = buffer.length;
-        var c = new Uint32Array(2);
+        var c = new Uint32Array(3);
         c[0] = 0xffffffff;
         for(var i = 0; i < len; ++i) {
             c[1] = buffer[i];
             c[0] = crc_table[(c[0] ^ c[1]) & 0xff] ^ (c[0] >> 8);
         }
-        return new Uint32Array([c[0] ^ 0xffffffff]);
+        c[2] = c[0] ^ 0xffffffff;
+        return c[2];
     };
 })();
 if(!module.parent){
     var assert = require('assert');
-    var a = new Uint32Array([4202626462]);
+    var a = 4202626462;
     var buf = new Buffer("hogehoge");
-    assert(crc32(buf)[0] === a[0]);
+    assert(crc32(buf) === a);
 }
