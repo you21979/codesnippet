@@ -28,11 +28,14 @@ var crc32 = module.exports = (function(){
         if(begin === undefined){
             begin = 0;
         }
+        var len = buffer.length;
         if(end === undefined){
-            end = buffer.length;
+            end = len;
+        }
+        if(end > len){
+            end = len;
         }
         var c = 0xffffffff;
-        var len = buffer.length;
         for (var i = begin; i < end; ++i) {
             c = crc_table[(c ^ buffer[i]) & 0xff] ^ (c >>> 8);
         }
