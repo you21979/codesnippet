@@ -1,5 +1,11 @@
 /**
- *  CRC32
+ * @fileoverview CRC32[http://ja.wikipedia.org/wiki/%E5%B7%A1%E5%9B%9E%E5%86%97%E9%95%B7%E6%A4%9C%E6%9F%BB]
+ */
+"use strict";
+/**
+ * CRC32
+ * @param {Buffer} arg1 バッファ
+ * @return {number} CRC値
  */
 var crc32 = module.exports = (function(){
     var crc_table = (function(){
