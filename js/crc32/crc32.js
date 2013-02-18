@@ -2,30 +2,29 @@
  *  CRC32
  */
 var crc32 = module.exports = (function(){
-    var MAX = 256;
-    var crc_table = (function(max){
-        var table = new Uint32Array(max);
-        var c = new Uint32Array(1);
-        for(var i = 0; i< max; ++i){
-            c[0] = i;
+    var crc_table = (function(){
+        var table = new Uint32Array(256);
+        var c = 0;
+        var len = table.length;
+        for(var i = 0; i< len; ++i){
+            c = i;
             for(var j = 0; j < 8; ++j) {
-                c[0] = (c[0] & 1) ? (0xedb88320 ^ (c[0] >> 1)) : (c[0] >> 1);
+                c = (c & 1) ? (0xedb88320 ^ (c>>>1)) : (c>>>1);
             }
-            table[i] = c[0];
+            table[i] = c;
         }
         return table;
-    })(MAX);
+    })();
     return function(buffer){
         if(!(buffer instanceof Buffer)){
             throw new Error('no Buffer');
         }
         var c = new Uint32Array(2);
         c[0] = 0xffffffff;
-        c[1] = 0;
         var len = buffer.length;
-        for(var i = 0; i < len; ++i) {
+        for (var i = 0; i < len; i++) {
             c[1] = c[0] ^ buffer[i];
-            c[0] = crc_table[c[1] & 0xff] ^ (c[0] >> 8);
+            c[0] = crc_table[c[1] & 0xff] ^ (c[0] >>> 8);
         }
         c[1] = c[0] ^ 0xffffffff;
         return c[1];
@@ -33,7 +32,7 @@ var crc32 = module.exports = (function(){
 })();
 if(!module.parent){
     var assert = require('assert');
-    var a = 4202626462;
+    var a = 4119635186;
     var buf = new Buffer("hogehoge");
     assert(crc32(buf) === a);
 }
