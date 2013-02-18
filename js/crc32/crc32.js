@@ -21,13 +21,19 @@ var crc32 = module.exports = (function(){
         }
         return table;
     })();
-    var export_crc32 = function(buffer){
+    var export_crc32 = function(buffer, begin, end){
         if(!(buffer instanceof Buffer)){
             throw new Error('no Buffer');
         }
+        if(begin === undefined){
+            begin = 0;
+        }
+        if(end === undefined){
+            end = buffer.length;
+        }
         var c = 0xffffffff;
         var len = buffer.length;
-        for (var i = 0; i < len; ++i) {
+        for (var i = begin; i < end; ++i) {
             c = crc_table[(c ^ buffer[i]) & 0xff] ^ (c >>> 8);
         }
         return (c ^ 0xffffffff) >>> 0;
