@@ -22,9 +22,9 @@ var crc32 = module.exports = (function(){
         var c = new Uint32Array(2);
         c[0] = 0xffffffff;
         var len = buffer.length;
-        for (var i = 0; i < len; i++) {
-            c[1] = c[0] ^ buffer[i];
-            c[0] = crc_table[c[1] & 0xff] ^ (c[0] >>> 8);
+        for (var i = 0; i < len; ++i) {
+            c[1] = (c[0] ^ buffer[i]) & 0xff;
+            c[0] = crc_table[c[1]] ^ (c[0] >>> 8);
         }
         c[1] = c[0] ^ 0xffffffff;
         return c[1];
