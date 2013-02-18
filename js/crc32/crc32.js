@@ -15,7 +15,7 @@ var crc32 = module.exports = (function(){
         }
         return table;
     })();
-    return function(buffer){
+    var export_crc32 = function(buffer){
         if(!(buffer instanceof Buffer)){
             throw new Error('no Buffer');
         }
@@ -26,10 +26,11 @@ var crc32 = module.exports = (function(){
         }
         return (c ^ 0xffffffff) >>> 0;
     };
+    return export_crc32;
 })();
 if(!module.parent){
     var assert = require('assert');
-    var a = 4119635186;
+    var ans = 4119635186;
     var buf = new Buffer("hogehoge");
-    assert(crc32(buf) === a);
+    assert(crc32(buf) === ans);
 }
