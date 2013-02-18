@@ -19,15 +19,12 @@ var crc32 = module.exports = (function(){
         if(!(buffer instanceof Buffer)){
             throw new Error('no Buffer');
         }
-        var c = new Uint32Array(2);
-        c[0] = 0xffffffff;
+        var c = 0xffffffff;
         var len = buffer.length;
         for (var i = 0; i < len; ++i) {
-            c[1] = (c[0] ^ buffer[i]) & 0xff;
-            c[0] = crc_table[c[1]] ^ (c[0] >>> 8);
+            c = crc_table[(c ^ buffer[i]) & 0xff] ^ (c >>> 8);
         }
-        c[1] = c[0] ^ 0xffffffff;
-        return c[1];
+        return (c ^ 0xffffffff) >>> 0;
     };
 })();
 if(!module.parent){
