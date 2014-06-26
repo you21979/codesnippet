@@ -17,6 +17,11 @@ var task3 = function(callback){
 }
 var task4 = function(callback){
 }
+var task5 = function(callback){
+    fs.readFile("something-file", "utf-8", function (err, data) {
+        callback(JSON.parse(data));
+    });
+}
 
 var proc = function(proctasks, timeout, fail, success, callback){
     var n = 0;
@@ -49,7 +54,7 @@ var proc = function(proctasks, timeout, fail, success, callback){
 }
 
 var main = function(callback){
-    var tasks = [task1, task2, task3, task4];
+    var tasks = [task1, task2, task3, task4, task5];
     var tasklist = [];
     var result = {
         success : 0,
