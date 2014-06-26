@@ -57,7 +57,7 @@ var proc = function(proctasks, timeout, fail, success, callback){
             });
             d.bind(task)(function(data){
                 if(to === null)return; // timedout
-                clearTimeout(to);
+                cancel();
                 success(data);
                 check();
             });
