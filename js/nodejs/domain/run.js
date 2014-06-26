@@ -22,6 +22,11 @@ var task5 = function(callback){
         callback(JSON.parse(data));
     });
 }
+var task6 = function(callback){
+    setTimeout(function(){
+        callback('ok');
+    }, 200);
+}
 
 var proc = function(proctasks, timeout, fail, success, callback){
     var n = 0;
@@ -36,15 +41,22 @@ var proc = function(proctasks, timeout, fail, success, callback){
         process.nextTick(function(){
             var d = domain.create();
             var to = setTimeout(function(){
+                to = null;
                 timeout(new Error('timeout'));
                 check();
             }, 100);
-            d.on('error', function (e) {
+            var cancel = function(){
                 clearTimeout(to);
+                to = null;
+            }
+            d.on('error', function (e) {
+                if(to === null)return; // timedout
+                cancel();
                 fail(e);
                 check();
             });
             d.bind(task)(function(data){
+                if(to === null)return; // timedout
                 clearTimeout(to);
                 success(data);
                 check();
@@ -54,7 +66,7 @@ var proc = function(proctasks, timeout, fail, success, callback){
 }
 
 var main = function(callback){
-    var tasks = [task1, task2, task3, task4, task5];
+    var tasks = [task1, task2, task3, task4, task5, task6];
     var tasklist = [];
     var result = {
         success : 0,
